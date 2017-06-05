@@ -50,35 +50,31 @@ sudo apt-get install mysql-server
 sudo service mysql start
 </code></pre>
 
+<p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
+
 <h3><a id="conf" class="anchor" href="#conf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Database Conf</h3>
 
     <p>Login to mysql as 'root' and create database</p>
     <pre><code>create database scheduler;</code></pre>
-    
+
     <p>While in mysql shell, create user and grant privileges using login/password you just created:</p>
     <pre><code>GRANT ALL PRIVILEGES ON scheduler.* to \'login\'@\'localhost\' IDENTIFIED BY \'password\';
 GRANT ALL PRIVILEGES ON scheduler.* to \'login\'@\'%\' IDENTIFIED BY \'password\';
 flush privileges;
 </code></pre>
-
+      </br>
 
 
 
 <h3><a id="grails" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Grails</h3>
-
-<p>The <b>BeAPI&#8482; API Framework</b> has the following project requirements:</p>
-<ul>
-  <li><b>Grails 3.1.9</b> (or higher)</li>
-  <li><b>spring-security-rest:2.0.0.M2</b> (or higher)</li>
-  <li><b>spring-security-rest-gorm:2.0.0.M2</b> (or higher)</li>
-</ul>
-
-<p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
-
-
-
-
-
+          <ul>
+          <li>Download Groovy 2.4.7 or greater from the <a href="http://www.groovy-lang.org/download.html">Groovy Website</a> and install in '/usr/share'</li>
+          <li>Download Grail 3.1.9 or greater from the <a href="https://grails.org/download.html">Grails website</a>  and install in '/usr/share'</li>
+          <li>Add the following to your .bashrc file in your home directory (or the /etc/bash.bashrc if you are on Ubuntu/Debian):</li>
+<pre><code>export GRAILS_HOME=/usr/share/grails-3.1.9
+export GROOVY_HOME=/usr/share/groovy-2.4.7
+</code></pre>
+          </ul>
 </br>
 
 </section>
