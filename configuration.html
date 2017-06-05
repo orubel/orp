@@ -23,8 +23,9 @@
           <li><a href="https://owenrubel.github.io/orp/configuration.html"><strong>Configuration</strong></a></li>
             <ul>
                 <li><a href="configuration.html#mysql">Installing MySQL</a></li>
-                <li><a href="configuration.html#grails">Installing Grails</a></li>
                 <li><a href="configuration.html#conf">Database Config</a></li>
+                <li><a href="configuration.html#grails">Installing Grails</a></li>
+
             </ul>
           </li>
             <li><a href="https://owenrubel.github.io/orp/installation.html"><strong>Installation</strong></a></li>
@@ -49,118 +50,39 @@ sudo apt-get install mysql-server
 sudo service mysql start
 </code></pre>
 
-        <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
-
-        <h3><a id="grails" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Grails</h3>
-
-        <p>The <b>BeAPI&#8482; API Framework</b> has the following project requirements:</p>
-        <ul>
-          <li><b>Grails 3.1.9</b> (or higher)</li>
-          <li><b>spring-security-rest:2.0.0.M2</b> (or higher)</li>
-          <li><b>spring-security-rest-gorm:2.0.0.M2</b> (or higher)</li>
-        </ul>
-
-        <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
-
+<p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
 <h3><a id="conf" class="anchor" href="#conf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Database Conf</h3>
-
-<p>In your <b>build.gradle</b> file, you will need the following plugins:</p>
-
-<pre><code>
-  apply plugin: "spring-boot"
-  apply plugin: "org.grails.grails-web"
+<ol>
+    <li>Login to mysql as 'root' and create database</li>
+    <pre><code>create database scheduler;</code></pre>
+    <li>While in mysql shell, create user and grant privileges using login/password you just created:</li>
+    <pre><code>GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'localhost' IDENTIFIED BY '\<password\>';
+GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'%' IDENTIFIED BY '\<password\>';
+flush privileges;
 </code></pre>
+</ol>
 
-<p>And while the plugin is in <b>BETA</b>, you will have to add the Maven Repository:</p>
-<pre><code>repositories {
-    maven {
-        url  "http://dl.bintray.com/nosegrind/plugins" 
-    }
-}</code></pre>
 
-<p>You will also need the following dependencies:</p>
-<pre><code>
-  dependencies {
-      compile 'org.grails.plugins:api-framework:0.9'
-      compile "org.springframework.boot:spring-boot-starter-logging"
-      compile "org.springframework.boot:spring-boot-autoconfigure"
-      compile "org.grails:grails-dependencies"{
-        exclude(module:'grails-bootstrap')
-        exclude(module:'grails-plugin-gsp')
-      }
 
-      // INSTALL DATABASE DRIVER OF YOUR CHOICE; HERE ARE EXAMPLE
-      //runtime 'mysql:mysql-connector-java:5.1.29'
+<h3><a id="grails" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Grails</h3>
 
-      //compile 'org.grails.plugins:mongodb:5.0.2'
-      //compile "org.mongodb:mongodb-driver:3.0.2"
-      //runtime 'org.springframework.data:spring-data-mongodb:1.8.1.RELEASE'
+<p>The <b>BeAPI&#8482; API Framework</b> has the following project requirements:</p>
+<ul>
+  <li><b>Grails 3.1.9</b> (or higher)</li>
+  <li><b>spring-security-rest:2.0.0.M2</b> (or higher)</li>
+  <li><b>spring-security-rest-gorm:2.0.0.M2</b> (or higher)</li>
+</ul>
 
-      provided 'org.springframework.boot:spring-boot-starter-tomcat'
-      provided('org.grails.plugins:spring-security-rest:2.0.0.M2'){
-        exclude(module:'org.springframework.security:spring-security-web')
-      }
-      compile 'org.grails.plugins:spring-security-rest-gorm:2.0.0.M2'
+<p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
-      compile "org.grails.plugins:hibernate"
-      compile "org.hibernate:hibernate-ehcache"
 
-      testCompile "org.grails.plugins:geb"
-      testCompile "org.grails:grails-plugin-testing"
-  }
-</code></pre>
+
+
+
 </br>
-<p>Create the following directories in your home directory:</p>
-<pre><code>mkdir ~/.iostate
-</code></pre>
-    </br>
-<p>Then in your <b>application.yml</b> file, you will need to add and modify the following line under each of your environments (ie development/production/etc):</p>
-<pre><code>iostate:
-    preloadDir: '/home/yourUserName/.iostate'"</code></pre>
-  </br>
-  <p>Finally, you will also need to add (and configure) this final snippet to your 'application.yml' file: </p>
-
-<pre><code>---
-apitoolkit:
-    apiName: 'api'
-    attempts: 5
-    roles: ['ROLE_USER','ROLE_ROOT','ROLE_ADMIN','ROLE_ARCH']
-    profilerRoles: ['ROLE_ROOT','ROLE_ADMIN','ROLE_ARCH']
-    apichain:
-        limit: 3
-    rest:
-        postcrement: false
-    chaining:
-        enabled: true
-    batching:
-        enabled: true
-    encoding: 'UTF-8'
-    throttle:
-        rateLimit: {'ROLE_USER':1000}
-        dataLimit: {'ROLE_USER':1000000}
-        # in seconds : 3600 = 60 minutes
-        expires: 3600
-    admin:
-        roles: ['ROLE_ROOT','ROLE_ADMIN','ROLE_ARCH']
-    serverType: 'master'
-    webhook:
-        services: ['iostate']
-    corsConfig:
-        includeEnvironments: ['development','test']
-        excludeEnvironments: ['production']
-        allowedOrigins: ['localhost:3000']
-</code></pre>
-<h3><a id="install" class="anchor" href="#samp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3>
-
-<p>If you are having issues installing or using the Boomstick API Framework, you can always look at or copy from our example project at the link below:</p>
-
-          <p><a href="https://github.com/orubel/api-framework-example">https://github.com/orubel/api-framework-example</a></p>
 
 </section>
-      <footer>
-        <p class="view"><a href="https://github.com/orubel/Boomstick-API-Framework">View the Project on GitHub <small>orubel/Beapi-API-Framework</small></a></p>
-      </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     
