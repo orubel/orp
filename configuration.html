@@ -19,8 +19,8 @@
         <p></p>
 
         <ul>
-          <li><a href="http://orubel.github.io/Beapi-API-Framework/index.html"><strong>About</strong></a></li>
-          <li><a href="http://orubel.github.io/Beapi-API-Framework/configuration.html"><strong>Configuration</strong></a></li>
+          <li><a href="https://owenrubel.github.io/orp/index.html"><strong>About</strong></a></li>
+          <li><a href="https://owenrubel.github.io/orp/configuration.html"><strong>Configuration</strong></a></li>
             <ul>
                 <li><a href="configuration.html#mysql">Installing MySQL</a></li>
                 <li><a href="configuration.html#grails">Installing Grails</a></li>
@@ -37,16 +37,23 @@
       <section>
         <h3><a id="mysql" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing MySQL</h3>
 
-        <p>The Development/Build environment where the 'artifact' is created needs to be setup in a particular fashion to be able to generate the jar. You will need to have the following installed:</p>
-        <ul>
-          <li><b>Grails 3.1.9</b> (or higher)</li>
-          <li><b>spring-security-rest:2.0.0.M2</b> (or higher)</li>
-          <li><b>spring-security-rest-gorm:2.0.0.M2</b> (or higher)</li>
-        </ul>
+        <p>Install MySql depending on your distro:</p>
+          <b>Redhat/CentOS</b>
+<pre><code>
+sudo yum install mysql-server
+sudo /sbin/service mysqld start
+</code></pre>
+      </br>
+<b>Debian/Ubuntu</b>
+<pre><code>
+sudo apt-get update
+sudo apt-get install mysql-server
+sudo service mysql start
+</code></pre>
 
         <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
-        <h3><a id="penv" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Grails</h3>
+        <h3><a id="grails" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing Grails</h3>
 
         <p>The <b>BeAPI&#8482; API Framework</b> has the following project requirements:</p>
         <ul>
