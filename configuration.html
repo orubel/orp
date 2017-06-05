@@ -53,15 +53,16 @@ sudo service mysql start
 <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
 <h3><a id="conf" class="anchor" href="#conf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Database Conf</h3>
-<ul>
-    <li>Login to mysql as 'root' and create database</li>
+
+    <p>Login to mysql as 'root' and create database
     <pre><code>create database scheduler;</code></pre>
-    <li>While in mysql shell, create user and grant privileges using login/password you just created:</li>
+    </p>
+    <p>While in mysql shell, create user and grant privileges using login/password you just created:
     <pre><code>GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'localhost' IDENTIFIED BY '\<password\>';
 GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'%' IDENTIFIED BY '\<password\>';
 flush privileges;
 </code></pre>
-</ul>
+</p>
 
 
 
