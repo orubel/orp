@@ -58,8 +58,8 @@ sudo service mysql start
     <pre><code>create database scheduler;</code></pre>
     
     <p>While in mysql shell, create user and grant privileges using login/password you just created:</p>
-    <pre><code>GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'localhost' IDENTIFIED BY '\<password\>';
-GRANT ALL PRIVILEGES ON scheduler.* to \<login\>@'%' IDENTIFIED BY '\<password\>';
+    <pre><code>GRANT ALL PRIVILEGES ON scheduler.* to 'login'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON scheduler.* to 'login'@'%' IDENTIFIED BY 'password';
 flush privileges;
 </code></pre>
 
