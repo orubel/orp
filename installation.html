@@ -45,7 +45,7 @@
 <pre><code>sudo mkdir ~/.orp</code></pre>
           <p>Then move the <b>/grails-app/conf/orp.yml</b> and <b>/grails-app/conf/orp.groovy</b> files from the project into that directory. These are the files we will be editing.</p>
 
-            <p>Edit /grails-app/conf/orp.yml and change the default login and password for the database in all environments:</p>
+          <p>Edit <b>/grails-app/conf/orp.yml</b> and change the default login and password for the database in all environments:</p>
 <pre><code>
     dataSource:
             pooled: true
@@ -58,9 +58,29 @@
             dbCreate: update
 
 </code></pre>
+          <p>Next, create a self signed SSL key and store it in '/home/{your home dir}/.keys/keystore.jks' (<a href="https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-using-java-keytool.html">https://www.sslshopper.com/article-how-to-create-a-self-signed-certificate-using-java-keytool.html</a>)</p>
+          <p>Edit <b>/grails-app/conf/orp.yml</b> and change the default ssl config:</p>
+<pre><code>
+        ssl:
+            enabled: true
+            key-store: /home/{your home dir}/.keys/keystore.jks
+            key-store-password: CHANGESTOREPASSWORD
+            key-alias: selfsigned
+            key-password: CHANGEPASSWORD
 
+</code></pre>
 
+          <p>Edit <b>/grails-app/conf/orp.yml</b> and change the iostate <b>'preloadDir'</b> in the different environments:</p>
+<pre><code>
+        iostate:
+            preloadDir: '/home/{your home dir}/.iostate'
+            archInstanceUrls:
+                proxy: "127.0.0.1"
+                mq: "127.0.0.1"
 
+</code></pre>
+
+          
         <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
         <h3><a id="penv" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prod Environment</h3>
