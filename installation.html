@@ -23,10 +23,9 @@
             <li><a href="https://owenrubel.github.io/orp/environment.html"><strong>Environment</strong></a></li>
             <li><a href="https://owenrubel.github.io/orp/installation.html"><strong>Installation</strong></a></li>
             <ul>
-                <li><a href="installation.html#benv">Build Environment</a></li>
-                <li><a href="installation.html#penv">Prod Environment</a></li>
-                <li><a href="installation.html#conf">Configuration</a></li>
-                <li><a href="installation.html#install">Installation</a></li>
+                <li><a href="installation.html#clone">Clone Project</a></li>
+                <li><a href="installation.html#conf">Config Files</a></li>
+                <li><a href="installation.html#io">I/O State Files</a></li>
             </ul>
           </li>
             <li><a href="https://owenrubel.github.io/orp/configuration.html"><strong>Configuration</strong></a></li>
@@ -37,14 +36,30 @@
         </ul>
       </header>
       <section>
-        <h3><a id="benv" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build Environment</h3>
+        <h3><a id="clone" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clone Project</h3>
+          <p>Clone the project into your workspace:</p>
+          <pre><code>git clone https://owenr@git.s.uw.edu/scm/~owenr_washington.edu/orp_backend.git</pre>
 
-        <p>The Development/Build environment where the 'artifact' is created needs to be setup in a particular fashion to be able to generate the jar. You will need to have the following installed:</p>
-        <ul>
-          <li><b>Grails 3.1.9</b> (or higher)</li>
-          <li><b>spring-security-rest:2.0.0.M2</b> (or higher)</li>
-          <li><b>spring-security-rest-gorm:2.0.0.M2</b> (or higher)</li>
-        </ul>
+        <h3><a id="conf" class="anchor" href="#req" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Config Files</h3>
+        <p>Next you will need to create a directory for the config files:</p>
+<pre><code>sudo mkdir ~/.orp</code></pre>
+          <p>Then move the <b>/grails-app/conf/orp.yml</b> and <b>/grails-app/conf/orp.groovy</b> files from the project into that directory. These are the files we will be editing.</p>
+
+            <p>Edit /grails-app/conf/orp.yml and change the default login and password for the database in all environments:</p>
+<pre><code>
+    dataSource:
+            pooled: true
+            jmxExport: true
+            driverClassName: "com.mysql.jdbc.Driver"
+            dialect: 'org.hibernate.dialect.MySQL5Dialect'
+            username: "changeMe"
+            password: "changeMe"
+            url: "jdbc:mysql://localhost/scheduler"
+            dbCreate: update
+
+</code></pre>
+
+
 
         <p><b>NOTE:</b> You may notice in the sample project that several rest plugins and web/mvc plugins have been left out from the dependencies. This is deliberate; due to out API abstraction layer, they can cause confusion and unnecessary slowness in the application.</p>
 
